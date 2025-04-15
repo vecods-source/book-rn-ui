@@ -2,16 +2,16 @@ import {
   View,
   Text,
   Image,
-  TextInput,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { styles } from "@/styles/global-style";
 import React, { useState } from "react";
 import COLORS from "@/constants/colors";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import Btn from "../../components/button";
 import { Link } from "expo-router";
+import InputField from "@/components/inputField";
+import Footer from "@/components/footer";
 // entry file for the auth stack
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,140 +19,62 @@ const Login = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const { width } = Dimensions.get("window");
-
-  const styles = StyleSheet.create({
-    illustrationImage: {
-      width: width * 0.75,
-      height: width * 0.75,
-    },
-  });
+  function setClear() {
+    setPassword("");
+    setEmail("");
+  }
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: COLORS.background,
-        alignItems: "center",
-        paddingHorizontal: 20,
-      }}
+    <KeyboardAvoidingView
+      behavior={Platform.OS ? "padding" : "height"}
+      style={{ flex: 1 }}
     >
-      <View>
-        <Image
-          source={require("../../assets/images/login.png")}
-          style={styles.illustrationImage}
-        />
-      </View>{" "}
-      {/* below is the container for the form => the form container => the inputs div */}
       <View
         style={{
-          borderRadius: 16,
-          marginTop: 20,
-          padding: 30,
-          marginHorizontal: 30,
-          backgroundColor: COLORS.cardBackground,
-          shadowColor: COLORS.black,
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 8,
-          elevation: 4,
-          width: "100%",
+          flex: 1,
+          backgroundColor: COLORS.background,
+          alignItems: "center",
+          justifyContent: "center",
+          paddingHorizontal: 20,
         }}
       >
-        <Text style={{ color: COLORS.textSecondary, marginTop: 10 }}>
-          Email
-        </Text>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            backgroundColor: COLORS.inputBackground,
-            width: "100%",
-            borderRadius: 10,
-            paddingHorizontal: 10,
-            borderColor: COLORS.border,
-            borderWidth: 1,
-            marginTop: 10,
-          }}
-        >
-          <Ionicons name="mail-outline" size={20} color={COLORS.primary} />
-          <TextInput
-            value={email}
-            placeholder="Enter your email"
-            onChangeText={(text) => setEmail(text)}
-            placeholderTextColor={COLORS.placeholderText}
-            style={{
-              width: "100%",
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-            }}
+        <View>
+          <Image
+            source={require("../../assets/images/login.png")}
+            style={styles.illustrationImage}
           />
         </View>
-        <Text style={{ color: COLORS.textSecondary, marginTop: 10 }}>
-          Password
-        </Text>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            backgroundColor: COLORS.inputBackground,
-            width: "100%",
-            borderRadius: 10,
-            paddingHorizontal: 10,
-            borderColor: COLORS.border,
-            borderWidth: 1,
-            marginTop: 10,
-          }}
-        >
-          <Ionicons name="mail-outline" size={20} color={COLORS.primary} />
-          <TextInput
-            value={email}
-            placeholder="Enter your email"
-            onChangeText={(text) => setEmail(text)}
-            placeholderTextColor={COLORS.placeholderText}
-            style={{
-              width: "100%",
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-            }}
+        {/* below is the container for the form => the form container => the inputs div */}
+        <View style={styles.formCont}>
+          <InputField
+            title="Login"
+            usrValue={email}
+            usrOnChange={setEmail}
+            usrplaceholder="Enter your email"
+            icon="mail-outline"
+            isPass={false}
+            showPass={true}
           />
-        </View>
-        <TouchableOpacity
-          style={{
-            backgroundColor: COLORS.primary,
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: 10,
-            paddingVertical: 15,
-            borderRadius: 16,
-            marginTop: 20,
-          }}
-        >
-          <Text style={{ fontSize: 16, fontWeight: "600", color: "white" }}>
-            Login
-          </Text>
-        </TouchableOpacity>
-        {/* Footer */}
-        <View
-          style={{
-            marginTop: 20,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ fontWeight: "300" }}>
-            Don't have an account?
-            <Link
-              style={{ color: COLORS.primary, fontWeight: "600" }}
-              href={"./register"}
-            >
-              Register
-            </Link>
-          </Text>
+          <InputField
+            title="Password"
+            usrValue={password}
+            usrOnChange={setPassword}
+            usrplaceholder="Enter your password"
+            icon="lock-closed-outline"
+            isPass={true}
+            showPass={showPassword}
+            setShow={setShowPassword}
+          />
+          <Btn title="Login" />
+          {/* Footer */}
+          <Footer
+            linktitle="Register"
+            title="Don't have an account?"
+            hlink={"/register"}
+            setClear={setClear}
+          />
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 export default Login;

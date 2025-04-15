@@ -11,8 +11,13 @@ import COLORS from "@/constants/colors";
 export default function RootLayout() {
   useEffect(() => {
     if (Platform.OS === "android") {
-      setBackgroundColorAsync(COLORS.background);
-      setButtonStyleAsync("dark");
+      StatusBar.setBackgroundColor("#ffffff"); // Status bar background color
+      StatusBar.setBarStyle("dark-content"); // Status bar icons (dark/light)
+      StatusBar.setTranslucent(false); // Optional: Make status bar non-translucent
+
+      // Android Navigation Bar
+      setBackgroundColorAsync("#ffffff"); // Navigation bar color
+      setButtonStyleAsync("dark"); // Navigation bar icons (light/dark)
     }
 
     // iOS Status Bar Configuration
