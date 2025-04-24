@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     width: width * 0.75,
     height: width * 0.75,
   },
-  formCont: {
+  Card: {
     borderRadius: 16,
     marginTop: 20,
     padding: 30,
@@ -18,5 +18,15 @@ export const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 4,
     width: "100%",
+    borderColor: COLORS.primary,
+    borderWidth: 1,
+  },
+  Container: {
+    flex: 1,
+    backgroundColor: COLORS.background,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 20,
   },
 });

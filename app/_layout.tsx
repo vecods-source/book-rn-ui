@@ -3,6 +3,8 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import SafeArea from "@/components/safe-area";
 import { useEffect } from "react";
 import { Platform, StatusBar } from "react-native";
+import { store } from "@/store/store";
+import { Provider } from "react-redux";
 import {
   setBackgroundColorAsync,
   setButtonStyleAsync,
@@ -16,7 +18,7 @@ export default function RootLayout() {
       StatusBar.setTranslucent(false); // Optional: Make status bar non-translucent
 
       // Android Navigation Bar
-      setBackgroundColorAsync("#ffffff"); // Navigation bar color
+      setBackgroundColorAsync(COLORS.background); // Navigation bar color
       setButtonStyleAsync("dark"); // Navigation bar icons (light/dark)
     }
 
@@ -26,13 +28,16 @@ export default function RootLayout() {
     }
   }, []);
   return (
-    <SafeAreaProvider>
-      <SafeArea>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" options={{ title: "Home" }} />
-          <Stack.Screen name="(Auth)" options={{ title: "Auth" }} />
-        </Stack>
-      </SafeArea>
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <SafeArea>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(tabs)" options={{ title: "main" }} />
+            <Stack.Screen name="index" options={{ title: "Home" }} />
+            <Stack.Screen name="(Auth)" options={{ title: "Auth" }} />
+          </Stack>
+        </SafeArea>
+      </SafeAreaProvider>
+    </Provider>
   );
 }

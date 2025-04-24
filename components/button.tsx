@@ -1,8 +1,18 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import React from "react";
 import COLORS from "@/constants/colors";
 
-const Btn = ({ title }: { title: string }) => {
+import { GestureResponderEvent } from "react-native";
+
+const Btn = ({
+  title,
+  handlePress,
+  isLoading,
+}: {
+  title: string;
+  handlePress: (event: GestureResponderEvent) => void;
+  isLoading: boolean;
+}) => {
   return (
     <TouchableOpacity
       style={{
@@ -14,11 +24,18 @@ const Btn = ({ title }: { title: string }) => {
         paddingVertical: 15,
         borderRadius: 16,
         marginTop: 20,
+        opacity: isLoading ? 0.7 : 1,
       }}
+      onPress={handlePress}
+      disabled={isLoading}
     >
-      <Text style={{ fontSize: 16, fontWeight: "600", color: "white" }}>
-        {title}
-      </Text>
+      {isLoading ? (
+        <ActivityIndicator size="small" color="white" />
+      ) : (
+        <Text style={{ fontSize: 16, fontWeight: "600", color: "white" }}>
+          {title}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };
